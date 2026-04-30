@@ -2,7 +2,7 @@ import "./App.css";
 import RenderOptimizer from "./RenderOptimizer";
 
 function App() {
-  return <RenderOptimizer />;
+  return <main><RenderOptimizer /></main>
 }
 
 export default App;
