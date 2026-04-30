@@ -1,12 +1,8 @@
-import './App.css'
+import "./App.css";
+import RenderOptimizer from "./RenderOptimizer";
 
 function App() {
-
-  return (
-    <>
-    App
-    </>
-  )
+  return <RenderOptimizer />;
 }
 
-export default App
+export default App;
