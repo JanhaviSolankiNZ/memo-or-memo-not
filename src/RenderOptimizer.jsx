@@ -34,6 +34,25 @@ const NormalChild = () => {
   );
 };
 
+const NormalChildWithOptimizedCallback = ({toggleClock}) => {
+  const renders = useRenderCount();
+  const ref = useFlashOnRender(renders);
+  const { clockRunning } = useContext(ClockContext);
+
+  return (
+    <div className="grid_item" ref={ref}>
+      <h2>Normal child with optimized callback</h2>
+      <p>
+        This is a normal child component with optimized callback, when the parent state changes, causing
+        a re-render, this component will also re-render even though callback was optimized with useCallback.
+      </p>
+      <button className={clockRunning ? "toggle_on" : "toggle_off"} onClick={toggleClock}>
+        Toggle Clock
+      </button>
+    </div>
+  );
+};
+
 const MemoChild = memo(() => {
   const renders = useRenderCount();
   const ref = useFlashOnRender(renders);
@@ -295,6 +314,7 @@ const RenderOptimizer = () => {
   const toggleClock = useCallback(() => setClockRunning(c => !c),[]);
 
   return (
+    <>
     <ClockContext.Provider
       value={{ time, alarm, toggleAlarm, toggleClock, clockRunning }}
     >
@@ -313,6 +333,7 @@ const RenderOptimizer = () => {
           </button>
         </div>
         <NormalChild />
+        <NormalChildWithOptimizedCallback  toggleClock={toggleClock} />
         <MemoChild />
         <MemoChildWithState />
         <MemoChildWithProp parentCount={count} />
@@ -325,6 +346,7 @@ const RenderOptimizer = () => {
         <MemoChildUseCallback onClick={handleIncrement} />
       </div>
     </ClockContext.Provider>
+    </>
   );
 };
 
